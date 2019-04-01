@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Services
 {
@@ -8,5 +7,6 @@ namespace Domain.Interfaces.Services
     {
         void Add(Project project);
         void Remove(int id);
+        Task<IQueryable<Employee>> ListEmployeesByProjectId(int id);   
     }
 }

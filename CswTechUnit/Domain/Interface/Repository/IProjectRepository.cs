@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Interface.Repository
 {
@@ -6,6 +7,7 @@ namespace Domain.Interface.Repository
     {
         void Add(Project project);
         void Remove(int id);
-        
+        Task<IQueryable<Employee>> ListEmployeesByProjectId(int id);
     }
 }
+

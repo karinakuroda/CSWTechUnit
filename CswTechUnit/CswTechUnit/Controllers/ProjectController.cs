@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,11 @@ namespace CswTechUnit.Controllers
         public void Delete(int id)
         {
             _projectService.Remove(id);
+        }
+        [HttpGet("{id}/Employees")]
+        public async Task<IQueryable<Employee>> Employees(int id)
+        {
+            return await _projectService.ListEmployeesByProjectId(id);
         }
     }
 }

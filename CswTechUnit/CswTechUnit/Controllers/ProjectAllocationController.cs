@@ -21,7 +21,6 @@ namespace CswTechUnit.Controllers
         [HttpPost]
         public void Post([FromBody] ProjectAllocationDTO dto)
         {
-           
             _projectAllocationService.Add(dto);
         }
 
