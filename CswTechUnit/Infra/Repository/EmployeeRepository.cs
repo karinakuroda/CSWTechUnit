@@ -34,7 +34,6 @@ namespace Infra.Repository
         public async Task<IQueryable<Project>> ListProjectsByEmployeeId(int employeeId)
         {
             return (await this._context.Set<Project>()
-              //.Include(i=>i.Project)
                .Where(ww=>ww.ProjectAllocations.Where(w=>w.EmployeeId==employeeId).Any())
                .ToListAsync())
                .AsQueryable();
@@ -52,7 +51,6 @@ namespace Infra.Repository
             var old = GetById(employee.Id);
             _context.Entry(old).CurrentValues.SetValues(employee);
             _context.SaveChanges();
-
         }
     }
 }

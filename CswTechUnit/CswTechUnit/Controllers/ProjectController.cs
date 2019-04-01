@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Interfaces.Services;
@@ -18,14 +17,12 @@ namespace CswTechUnit.Controllers
             this._projectService = projectService;
         }
        
-        // POST api/values
         [HttpPost]
         public void Post([FromBody] Project value)
         {
             _projectService.Add(value);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

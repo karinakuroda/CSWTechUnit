@@ -17,14 +17,12 @@ namespace CswTechUnit.Controllers
             this._projectAllocationService = projectAllocationService;
         }
        
-        // POST api/values
         [HttpPost]
         public void Post([FromBody] ProjectAllocationDTO dto)
         {
             _projectAllocationService.Add(dto);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

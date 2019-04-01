@@ -1,7 +1,6 @@
 ﻿using Domain;
 using Domain.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,11 +34,10 @@ namespace Infra.Repository
             _context.Remove(project);
             _context.SaveChanges();
         }
+
         private Project GetById(int id)
         {
             return _context.Projects.SingleOrDefault(s => s.Id == id);
         }
-
-
     }
 }
