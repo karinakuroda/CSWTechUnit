@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Domain;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,18 +17,25 @@ namespace CswTechUnit.Controllers
         {
             this._employeeService = employeeService;
         }
-        // GET api/values
+        
         [HttpGet]
         public ActionResult<IEnumerable<Employee>> Get()
         {
             return _employeeService.ListEmployees();
         }
 
-        // GET api/values/5
+       
         [HttpGet("{id}")]
         public ActionResult<Employee> Get(int id)
         {
             return _employeeService.GetById(id);
+        }
+
+
+        [HttpGet("{id}/projects")]
+        public async Task<IQueryable<Project>> Projects(int id)
+        {
+            return await _employeeService.ListProjectsByEmployeeId(id);
         }
 
         // POST api/values

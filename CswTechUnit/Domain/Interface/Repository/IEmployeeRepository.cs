@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Domain.Interface.Repository
 {
@@ -11,5 +11,6 @@ namespace Domain.Interface.Repository
         List<Employee> ListEmployees();
         void UpdateEmployee(Employee employee);
         Employee GetById(int id);
+        Task<IQueryable<Project>> ListProjectsByEmployeeId(int employeeId);
     }
 }

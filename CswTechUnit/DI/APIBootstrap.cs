@@ -18,10 +18,14 @@ namespace DI
                                                               .Build();
 
             //New object every time
-            //SERVICES
             services.AddTransient<IEmployeeService, EmployeeService>();
-            //REPOS
+            services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IProjectAllocationService, ProjectAllocationService>();
+
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IProjectRepository, ProjectRepository>();
+            services.AddTransient<IProjectAllocationRepository, ProjectAllocationRepository>();
+            
             services.AddTransient<CswContext, CswContext>();
             
         }

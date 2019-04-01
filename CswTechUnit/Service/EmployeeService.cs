@@ -3,6 +3,8 @@ using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Service
 {
@@ -36,6 +38,10 @@ namespace Service
         public Employee GetById(int id)
         {
            return _employeeRepository.GetById(id);
+        }
+        public Task<IQueryable<Project>> ListProjectsByEmployeeId(int employeeId)
+        {
+            return _employeeRepository.ListProjectsByEmployeeId(employeeId);
         }
     }
 }
