@@ -95,13 +95,14 @@ namespace UnitTest
             //Assert
             resp.Result.Equals(GetMockListEmployee());
         }
-       
+
         private static List<Employee> GetMockListEmployee()
         {
-            var emp = new Employee(1, "teste", new System.DateTime(2019,03,03), RoleType.JE,PlatoonType.Fusion);
-            return new List<Employee>();
+            var emp = new Employee(1, "teste", new System.DateTime(2019, 03, 03), RoleType.JE, PlatoonType.Fusion);
+            var list = new List<Employee>();
+            list.Add(emp);
+            return list;
         }
-
     }
     
 }
