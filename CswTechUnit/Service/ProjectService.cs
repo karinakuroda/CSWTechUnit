@@ -15,9 +15,14 @@ namespace Service
             this._projectRepository = projectRepository;
         }
 
-        public void Add(Project project)
+        public Task<int> Add(Project project)
         {
-            this._projectRepository.Add(project);
+           return this._projectRepository.Add(project);
+        }
+
+        public Task<Project> GetById(int id)
+        {
+            return this._projectRepository.GetById(id);
         }
 
         public Task<List<Employee>> ListEmployeesByProjectId(int id)
@@ -25,9 +30,9 @@ namespace Service
            return this._projectRepository.ListEmployeesByProjectId(id);
         }
 
-        public void Remove(int id)
+        public Task<int> Remove(int id)
         {
-            this._projectRepository.Remove(id);
+            return this._projectRepository.Remove(id);
         }
     }
 }

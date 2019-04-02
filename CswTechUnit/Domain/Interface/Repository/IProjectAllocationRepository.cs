@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Interface.Repository
 {
     public interface IProjectAllocationRepository
     {
-        void Add(ProjectAllocation project);
+        Task<int> Add(ProjectAllocation project);
 
-        void Remove(int id);
+        Task<int> Remove(int id);
+
+        Task<ProjectAllocation> GetById(int id);
     }
 }

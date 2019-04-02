@@ -2,6 +2,8 @@
 using Domain.DTO;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Service
 {
@@ -14,15 +16,20 @@ namespace Service
             this._projectAllocationRepository = projectAllocationRepository;
         }
 
-        public void Add(ProjectAllocationDTO dto)
+        public Task<int> Add(ProjectAllocation projectAllocation)
         {
-            var projectAllocation = new ProjectAllocation(dto.ProjectId, dto.EmployeeId, dto.PercentageAllocation);
-            this._projectAllocationRepository.Add(projectAllocation);
+      
+            return this._projectAllocationRepository.Add(projectAllocation);
         }
-        
-        public void Remove(int id)
+         
+        public Task<ProjectAllocation> GetById(int id)
         {
-            this._projectAllocationRepository.Remove(id);
+            return this._projectAllocationRepository.GetById(id);
+        }
+
+        public Task<int> Remove(int id)
+        {
+           return this._projectAllocationRepository.Remove(id);
         }
     }
 }

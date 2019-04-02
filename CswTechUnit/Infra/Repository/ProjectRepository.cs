@@ -15,10 +15,10 @@ namespace Infra.Repository
         {
             this._context = context;
         }
-        public void Add(Project project)
+        public Task<int> Add(Project project)
         {
-            _context.Add(project);
-            _context.SaveChanges();
+            this._context.Add(project);
+            return this._context.SaveChangesAsync();
         }
 
         public async Task<List<Employee>> ListEmployeesByProjectId(int id)
@@ -28,16 +28,16 @@ namespace Infra.Repository
                     .ToListAsync());
         }
 
-        public void Remove(int id)
+        public Task<int> Remove(int id)
         {
             var project = GetById(id);
-            _context.Remove(project);
-            _context.SaveChanges();
+            this._context.Remove(project);
+            return this._context.SaveChangesAsync();
         }
 
-        private Project GetById(int id)
+        public Task<Project> GetById(int id)
         {
-            return _context.Projects.SingleOrDefault(s => s.Id == id);
+            return this._context.Projects.SingleOrDefaultAsync(s => s.Id == id);
         }
     }
 }

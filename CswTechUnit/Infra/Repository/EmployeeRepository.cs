@@ -16,15 +16,16 @@ namespace Infra.Repository
         {
             this._context = context;
         }
-        public void AddEmployee(Employee employee)
+        public Task<int> AddEmployee(Employee employee)
         {
             this._context.Add(employee);
-            this._context.SaveChangesAsync();
+            var rowsAffected = this._context.SaveChangesAsync();
+            return rowsAffected;
         }
 
-        public Employee GetById(int id)
+        public Task<Employee> GetById(int id)
         {
-            return this._context.Employees.SingleOrDefault(s=>s.Id==id);
+            return this._context.Employees.SingleOrDefaultAsync(s=>s.Id==id);
         }
 
         public Task<List<Employee>> ListEmployees()
@@ -39,18 +40,18 @@ namespace Infra.Repository
                .ToListAsync());
         }
 
-        public void RemoveEmployee(int id)
+        public Task<int> RemoveEmployee(int id)
         {
             var emp = GetById(id);
             this._context.Remove(emp);
-            this._context.SaveChangesAsync();
+            return this._context.SaveChangesAsync();
         }
 
-        public void UpdateEmployee(Employee employee)
+        public Task<int> UpdateEmployee(Employee employee)
         {
             var old = GetById(employee.Id);
             this._context.Entry(old).CurrentValues.SetValues(employee);
-            this._context.SaveChangesAsync();
+            return this._context.SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Domain;
 using Domain.Interface.Repository;
 
@@ -12,21 +13,21 @@ namespace Infra.Repository
         {
             this._context = context;
         }
-        public void Add(ProjectAllocation project)
+        public Task<int> Add(ProjectAllocation project)
         {
             this._context.Add(project);
-            this._context.SaveChanges();
+            return this._context.SaveChangesAsync();
         }
         
-        public void Remove(int id)
+        public Task<int> Remove(int id)
         {
             var project = GetById(id);
             this._context.Remove(project);
-            this._context.SaveChanges();
+            return this._context.SaveChangesAsync();
         }
-        private ProjectAllocation GetById(int id)
+        public Task<ProjectAllocation> GetById(int id)
         {
-            return this._context.ProjectAllocations.SingleOrDefault(s => s.Id == id);
+            return this._context.ProjectAllocations.SingleOrDefaultAsync(s => s.Id == id);
         }
     }
 }

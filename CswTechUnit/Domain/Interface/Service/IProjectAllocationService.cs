@@ -1,11 +1,15 @@
 ﻿using Domain.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Services
 {
     public interface IProjectAllocationService
     {
-        void Add(ProjectAllocationDTO dto);
+        Task<int> Add(ProjectAllocation dto);
 
-        void Remove(int id);
+        Task<int> Remove(int id);
+
+        Task<ProjectAllocation> GetById(int id);
     }
 }

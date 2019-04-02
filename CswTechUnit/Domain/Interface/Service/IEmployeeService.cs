@@ -5,13 +5,13 @@ namespace Domain.Interfaces.Services
 {
     public interface IEmployeeService
     {
-        void AddEmployee(Employee employee);
-        
-        void RemoveEmployee(int id);
-        
-        void UpdateEmployee(Employee employee);
+        Task<int> AddEmployee(Employee employee);
 
-        Employee GetById(int id);
+        Task<int> RemoveEmployee(int id);
+
+        Task<int> UpdateEmployee(Employee employee);
+
+        Task<Employee> GetById(int id);
 
         Task<List<Employee>> ListEmployees();
 

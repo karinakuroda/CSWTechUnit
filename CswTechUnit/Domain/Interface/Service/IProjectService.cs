@@ -5,10 +5,12 @@ namespace Domain.Interfaces.Services
 {
     public interface IProjectService
     {
-        void Add(Project project);
+        Task<int> Add(Project project);
 
-        void Remove(int id);
+        Task<int> Remove(int id);
 
-        Task<List<Employee>> ListEmployeesByProjectId(int id);   
+        Task<Project> GetById(int id);
+
+        Task<List<Employee>> ListEmployeesByProjectId(int id);
     }
 }
