@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
+using Domain.DTO;
 
 namespace CswTechUnit.Controllers
 {
@@ -25,10 +26,11 @@ namespace CswTechUnit.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] Project project)
+        public async Task<IActionResult> Post([FromBody] ProjectDTO dto)
         {
-            var validation = project.Name != "";
-            if (validation)
+            var project = new Project(dto.Name);
+            
+            if (project.IsValid())
             {
                 await this._projectService.Add(project);
                 return CreatedAtAction(nameof(this.Get), new { id = project.Id }, project);

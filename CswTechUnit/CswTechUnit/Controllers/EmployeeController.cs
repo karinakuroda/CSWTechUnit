@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Domain;
 using Domain.Interfaces.Services;
+using Domain.DTO;
 
 namespace CswTechUnit.Controllers
 {
@@ -78,10 +79,10 @@ namespace CswTechUnit.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] Employee employee)
+        public async Task<IActionResult> Post([FromBody] EmployeeDTO dto)
         {
-            var validation = employee.Name != "";
-            if (validation)
+            var employee = new Employee(dto.Name, dto.StartDate,dto.Role, dto.Platoon);
+            if (employee.IsValid())
             {
                 await this._employeeService.AddEmployee(employee);
                 return CreatedAtAction(nameof(this.Get), new { id = employee.Id }, employee);
@@ -96,10 +97,11 @@ namespace CswTechUnit.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put([FromBody] Employee employee)
+        public async Task<IActionResult> Put([FromBody] EmployeeDTO dto)
         {
-            var validation = employee.Name != "";
-            if (validation)
+            var employee = new Employee(dto.Id, dto.Name, dto.StartDate, dto.Role, dto.Platoon);
+            
+            if (employee.IsValid())
             {
                 await this._employeeService.UpdateEmployee(employee);
                 return NoContent();

@@ -20,5 +20,11 @@
             this.EmployeeId = employeeId;
             this.PercentageAllocation = percentageAllocation;
         }
+        public bool IsValid()
+        {
+            if (this.ProjectId > 0 && this.EmployeeId > 0 && this.PercentageAllocation > 0)
+                return true;
+            return false;
+        }
     }
 }

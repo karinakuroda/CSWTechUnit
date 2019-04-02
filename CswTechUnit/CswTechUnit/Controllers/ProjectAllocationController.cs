@@ -27,10 +27,10 @@ namespace CswTechUnit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] ProjectAllocationDTO dto)
         {
-            var validation = dto.ProjectId != 0;
-            if (validation)
+            var projectAllocation = new ProjectAllocation(dto.ProjectId, dto.EmployeeId, dto.PercentageAllocation);
+            
+            if (projectAllocation.IsValid())
             {
-                var projectAllocation = new ProjectAllocation(dto.ProjectId, dto.EmployeeId, dto.PercentageAllocation);
                 await this._projectAllocationService.Add(projectAllocation);
                 return CreatedAtAction(nameof(this.Get), new { id = projectAllocation.Id }, projectAllocation);
             }
