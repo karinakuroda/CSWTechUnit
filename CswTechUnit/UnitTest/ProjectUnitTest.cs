@@ -6,18 +6,29 @@ using Domain;
 using Domain.Enum;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
+using CswTechUnit.Controllers;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Domain.DTO;
 
 namespace UnitTest
 {
     public class ProjectUnitTest
     {
         private readonly Mock<IProjectRepository> _mockProjectRepository;
-        private readonly IProjectService projectService;
+
+        private readonly Mock<IProjectService> _mockProjectService;
+
+        private readonly ProjectController _projectController;
+
+        private readonly IProjectService _projectService;
 
         public ProjectUnitTest()
         {
             _mockProjectRepository = new Mock<IProjectRepository>();
-            projectService = new ProjectService(_mockProjectRepository.Object);
+            _mockProjectService = new Mock<IProjectService>();
+            _projectService = new ProjectService(_mockProjectRepository.Object);
+            _projectController = new ProjectController(_mockProjectService.Object);
         }
 
         [Fact]
@@ -26,7 +37,7 @@ namespace UnitTest
             //Arrange
             _mockProjectRepository.Setup(s => s.Add(It.IsAny<Project>()));
             //Act
-            var resp = projectService.Add(It.IsAny<Project>());
+            var resp = _projectService.Add(It.IsAny<Project>());
             //Assert
             _mockProjectRepository.Verify(o => o.Add(It.IsAny<Project>()), Times.Once());
         }
@@ -37,7 +48,7 @@ namespace UnitTest
             //Arrange
             _mockProjectRepository.Setup(s => s.Remove(It.IsAny<int>()));
             //Act
-            var resp = projectService.Remove(It.IsAny<int>());
+            var resp = _projectService.Remove(It.IsAny<int>());
             //Assert
             _mockProjectRepository.Verify(o => o.Remove(It.IsAny<int>()), Times.Once());
         }
@@ -48,7 +59,7 @@ namespace UnitTest
             //Arrange
             _mockProjectRepository.Setup(s => s.GetById(It.IsAny<int>()));
             //Act
-            var resp = projectService.GetById(It.IsAny<int>());
+            var resp = _projectService.GetById(It.IsAny<int>());
             //Assert
             _mockProjectRepository.Verify(o => o.GetById(It.IsAny<int>()), Times.Once());
         }
@@ -59,11 +70,29 @@ namespace UnitTest
             //Arrange
             _mockProjectRepository.Setup(s => s.ListEmployeesByProjectId(It.IsAny<int>())).ReturnsAsync(GetMockListEmployee());
             //Act
-            var resp = projectService.ListEmployeesByProjectId(It.IsAny<int>());
+            var resp = _projectService.ListEmployeesByProjectId(It.IsAny<int>());
             //Assert
             resp.Result.Count.Equals(2);
         }
-        
+
+        [Fact]
+        public async Task ShouldReturnBadRequestWhenInvalidAdd()
+        {
+            //Act
+            var resp = await _projectController.Post(new ProjectDTO());
+            //Assert
+            var badRequestResult = Assert.IsType<BadRequestResult>(resp);
+        }
+
+        [Fact]
+        public async Task ShouldReturnOkWhenValidAdd()
+        {
+            //Act
+            var resp = await _projectController.Post(new ProjectDTO { Name = "PROJETO ABC"});
+            //Assert
+             Assert.IsType<CreatedAtActionResult>(resp);
+        }
+
         private static List<Employee> GetMockListEmployee()
         {
             var joao = new Employee(1, "teste", new System.DateTime(2019, 03, 03), RoleType.JE, PlatoonType.Fusion);

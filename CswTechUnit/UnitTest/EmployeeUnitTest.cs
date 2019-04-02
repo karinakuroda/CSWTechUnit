@@ -1,10 +1,15 @@
+using CswTechUnit.Controllers;
 using Domain;
+using Domain.DTO;
 using Domain.Enum;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Service;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTest
@@ -12,13 +17,61 @@ namespace UnitTest
     public class EmployeeUnitTest
     {
         private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
+        private readonly Mock<IEmployeeService> _mockEmployeeService;
+        private readonly EmployeeController _employeeController;
 
         private readonly IEmployeeService employeeService;
 
         public EmployeeUnitTest()
         {
             _mockEmployeeRepository = new Mock<IEmployeeRepository>();
+            _mockEmployeeService= new Mock<IEmployeeService>();
+            _employeeController = new EmployeeController(_mockEmployeeService.Object);
             employeeService = new EmployeeService(_mockEmployeeRepository.Object);
+        }
+
+        [Fact]
+        public async Task ShouldReturnBadRequestWhenInvalidAdd()
+        {
+            //Arrange
+            _mockEmployeeService.Setup(s => s.AddEmployee(new Employee()));
+            //Act
+            var resp = await _employeeController.Post(new EmployeeDTO());
+            //Assert
+            var badRequestResult = Assert.IsType<BadRequestResult>(resp);
+        }
+
+        [Fact]
+        public async Task ShouldReturnOkWhenValidAdd()
+        {
+            //Arrange
+            _mockEmployeeService.Setup(s => s.AddEmployee(new Employee()));
+            //Act
+            var resp = await _employeeController.Post(GetValidEmployeeDTO());
+            //Assert
+            var badRequestResult = Assert.IsType<CreatedAtActionResult>(resp);
+        }
+
+        [Fact]
+        public async Task ShouldReturnBadRequestWhenInvalidUpdate()
+        {
+            //Arrange
+            _mockEmployeeService.Setup(s => s.UpdateEmployee(new Employee()));
+            //Act
+            var resp = await _employeeController.Put(new EmployeeDTO());
+            //Assert
+            var badRequestResult = Assert.IsType<BadRequestResult>(resp);
+        }
+
+        [Fact]
+        public async Task ShouldReturnNoContentWhenValidUpdate()
+        {
+            //Arrange
+            _mockEmployeeService.Setup(s => s.UpdateEmployee(new Employee()));
+            //Act
+            var resp = await _employeeController.Put(GetValidEmployeeDTO());
+            //Assert
+            var badRequestResult = Assert.IsType<NoContentResult>(resp);
         }
 
         [Fact]
@@ -105,6 +158,15 @@ namespace UnitTest
             list.Add(emp);
             return list;
         }
+
+        private static EmployeeDTO GetValidEmployeeDTO()
+        {
+            var dto = new EmployeeDTO();
+            dto.Name = "Teste ABC";
+            dto.StartDate = DateTime.Now;
+            dto.Role = RoleType.SE;
+            dto.Platoon = PlatoonType.Jedi;
+            return dto;
+        }
     }
 }
-
