@@ -1,6 +1,5 @@
-﻿using Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace Infra
 {

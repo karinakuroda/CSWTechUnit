@@ -1,15 +1,11 @@
-﻿using Domain.Interface.Repository;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Domain.Interfaces.Services;
 using Infra;
-using Infra.Repository;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Service;
-using System;
 
-namespace DI
+namespace Service
 {
-    public class APIBootstrap
+    public class DependencyServices
     {
         public static void ConfigureServices(ref IServiceCollection services)
         {
@@ -21,13 +17,8 @@ namespace DI
             services.AddTransient<IEmployeeService, EmployeeService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IProjectAllocationService, ProjectAllocationService>();
-
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddTransient<IProjectRepository, ProjectRepository>();
-            services.AddTransient<IProjectAllocationRepository, ProjectAllocationRepository>();
-            
+          
             services.AddTransient<CswContext, CswContext>();
-            
         }
     }
 }

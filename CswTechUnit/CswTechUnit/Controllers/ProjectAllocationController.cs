@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using Domain;
+﻿using Microsoft.AspNetCore.Mvc;
 using Domain.DTO;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CswTechUnit.Controllers
 {
@@ -20,13 +18,13 @@ namespace CswTechUnit.Controllers
         [HttpPost]
         public void Post([FromBody] ProjectAllocationDTO dto)
         {
-            _projectAllocationService.Add(dto);
+            this._projectAllocationService.Add(dto);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _projectAllocationService.Remove(id);
+            this._projectAllocationService.Remove(id);
         }
     }
 }

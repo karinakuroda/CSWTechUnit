@@ -1,8 +1,9 @@
-﻿using Domain;
-using Domain.Interface.Repository;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Domain;
+using Domain.Interface.Repository;
 
 namespace Infra.Repository
 {
@@ -20,12 +21,11 @@ namespace Infra.Repository
             _context.SaveChanges();
         }
 
-        public async Task<IQueryable<Employee>> ListEmployeesByProjectId(int id)
+        public async Task<List<Employee>> ListEmployeesByProjectId(int id)
         {
             return (await this._context.Set<Employee>()
                     .Where(ww => ww.ProjectAllocations.Where(w => w.ProjectId == id).Any())
-                    .ToListAsync())
-                    .AsQueryable();
+                    .ToListAsync());
         }
 
         public void Remove(int id)

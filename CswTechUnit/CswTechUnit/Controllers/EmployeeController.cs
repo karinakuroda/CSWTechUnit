@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CswTechUnit.Controllers
 {
@@ -19,44 +18,43 @@ namespace CswTechUnit.Controllers
         }
         
         [HttpGet]
-        public ActionResult<IEnumerable<Employee>> Get()
+        public async Task<ActionResult<List<Employee>>>Get()
         {
-            return _employeeService.ListEmployees();
+            return await this._employeeService.ListEmployees();
         }
-
-       
+        
         [HttpGet("{id}")]
         public ActionResult<Employee> Get(int id)
         {
-            return _employeeService.GetById(id);
+            return this._employeeService.GetById(id);
         }
-
-
+        
         [HttpGet("{id}/projects")]
-        public async Task<IQueryable<Project>> Projects(int id)
+        public async Task<List<Project>> Projects(int id)
         {
-            return await _employeeService.ListProjectsByEmployeeId(id);
+            return await this._employeeService.ListProjectsByEmployeeId(id);
         }
 
-        // POST api/values
         [HttpPost]
+        //[ProducesResponseType] for all possible responses or defaults (I dont know if defaults is already launched)
+        //TODO: Use async always when possible
+        //TODO: Work with DTO in this layer
         public void Post([FromBody] Employee value)
         {
-            _employeeService.AddEmployee(value);
+            this._employeeService.AddEmployee(value);
+            //TODO: What kind of return this produces, Created, Accepted, NoContent?
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Employee value)
         {
-            _employeeService.UpdateEmployee(value);
+            this._employeeService.UpdateEmployee(value);
         }
-
-        // DELETE api/values/5
+        
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _employeeService.RemoveEmployee(id);
+            this._employeeService.RemoveEmployee(id);
         }
     }
 }

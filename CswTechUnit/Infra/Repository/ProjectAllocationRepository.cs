@@ -1,7 +1,6 @@
-﻿using Domain;
+﻿using System.Linq;
+using Domain;
 using Domain.Interface.Repository;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Infra.Repository
 {
@@ -15,19 +14,19 @@ namespace Infra.Repository
         }
         public void Add(ProjectAllocation project)
         {
-            _context.Add(project);
-            _context.SaveChanges();
+            this._context.Add(project);
+            this._context.SaveChanges();
         }
         
         public void Remove(int id)
         {
             var project = GetById(id);
-            _context.Remove(project);
-            _context.SaveChanges();
+            this._context.Remove(project);
+            this._context.SaveChanges();
         }
         private ProjectAllocation GetById(int id)
         {
-            return _context.ProjectAllocations.SingleOrDefault(s => s.Id == id);
+            return this._context.ProjectAllocations.SingleOrDefault(s => s.Id == id);
         }
     }
 }

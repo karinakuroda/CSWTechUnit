@@ -1,8 +1,8 @@
-﻿using Domain;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -17,17 +17,17 @@ namespace Service
 
         public void Add(Project project)
         {
-            _projectRepository.Add(project);
+            this._projectRepository.Add(project);
         }
 
-        public Task<IQueryable<Employee>> ListEmployeesByProjectId(int id)
+        public Task<List<Employee>> ListEmployeesByProjectId(int id)
         {
-           return _projectRepository.ListEmployeesByProjectId(id);
+           return this._projectRepository.ListEmployeesByProjectId(id);
         }
 
         public void Remove(int id)
         {
-            _projectRepository.Remove(id);
+            this._projectRepository.Remove(id);
         }
     }
 }

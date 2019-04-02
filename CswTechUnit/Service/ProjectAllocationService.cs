@@ -16,13 +16,13 @@ namespace Service
 
         public void Add(ProjectAllocationDTO dto)
         {
-            ProjectAllocation projectAllocation = new ProjectAllocation(dto.ProjectId, dto.EmployeeId, dto.PercentageAllocation);
-            _projectAllocationRepository.Add(projectAllocation);
+            var projectAllocation = new ProjectAllocation(dto.ProjectId, dto.EmployeeId, dto.PercentageAllocation);
+            this._projectAllocationRepository.Add(projectAllocation);
         }
         
         public void Remove(int id)
         {
-            _projectAllocationRepository.Remove(id);
+            this._projectAllocationRepository.Remove(id);
         }
     }
 }

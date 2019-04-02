@@ -1,9 +1,10 @@
-﻿using Domain;
-using Domain.Interface.Repository;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Domain;
+using Domain.Interface.Repository;
+
 
 namespace Infra.Repository
 {
@@ -17,40 +18,39 @@ namespace Infra.Repository
         }
         public void AddEmployee(Employee employee)
         {
-            _context.Add(employee);
-            _context.SaveChanges();
+            this._context.Add(employee);
+            this._context.SaveChangesAsync();
         }
 
         public Employee GetById(int id)
         {
-            return _context.Employees.SingleOrDefault(s=>s.Id==id);
+            return this._context.Employees.SingleOrDefault(s=>s.Id==id);
         }
 
-        public List<Employee> ListEmployees()
+        public Task<List<Employee>> ListEmployees()
         {
-            return _context.Employees.ToList();
+            return this._context.Employees.ToListAsync();
         }
 
-        public async Task<IQueryable<Project>> ListProjectsByEmployeeId(int employeeId)
+        public async Task<List<Project>> ListProjectsByEmployeeId(int employeeId)
         {
             return (await this._context.Set<Project>()
-               .Where(ww=>ww.ProjectAllocations.Where(w=>w.EmployeeId==employeeId).Any())
-               .ToListAsync())
-               .AsQueryable();
+               .Where(w=>w.ProjectAllocations.Where(allocation=> allocation.EmployeeId==employeeId).Any())
+               .ToListAsync());
         }
 
         public void RemoveEmployee(int id)
         {
             var emp = GetById(id);
-            _context.Remove(emp);
-            _context.SaveChanges();
+            this._context.Remove(emp);
+            this._context.SaveChangesAsync();
         }
 
         public void UpdateEmployee(Employee employee)
         {
             var old = GetById(employee.Id);
-            _context.Entry(old).CurrentValues.SetValues(employee);
-            _context.SaveChanges();
+            this._context.Entry(old).CurrentValues.SetValues(employee);
+            this._context.SaveChangesAsync();
         }
     }
 }

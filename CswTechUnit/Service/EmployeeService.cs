@@ -1,10 +1,8 @@
-﻿using Domain;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Domain;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -16,32 +14,35 @@ namespace Service
         {
             this._employeeRepository = employeeRepository;
         }
+
         public void AddEmployee(Employee employee)
         {
-            _employeeRepository.AddEmployee(employee);
+            this._employeeRepository.AddEmployee(employee);
         }
 
-        public List<Employee> ListEmployees()
+        public Task<List<Employee>> ListEmployees()
         {
-           return _employeeRepository.ListEmployees();
+           return this._employeeRepository.ListEmployees();
         }
 
         public void RemoveEmployee(int id)
         {
-            _employeeRepository.RemoveEmployee(id);
+            this._employeeRepository.RemoveEmployee(id);
         }
-
+        
         public void UpdateEmployee(Employee employee)
         {
-            _employeeRepository.UpdateEmployee(employee);
+            this._employeeRepository.UpdateEmployee(employee);
         }
+
         public Employee GetById(int id)
         {
-           return _employeeRepository.GetById(id);
+           return this._employeeRepository.GetById(id);
         }
-        public Task<IQueryable<Project>> ListProjectsByEmployeeId(int employeeId)
+
+        public Task<List<Project>> ListProjectsByEmployeeId(int employeeId)
         {
-            return _employeeRepository.ListProjectsByEmployeeId(employeeId);
+            return this._employeeRepository.ListProjectsByEmployeeId(employeeId);
         }
     }
 }
