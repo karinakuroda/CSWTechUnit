@@ -47,11 +47,11 @@ namespace Infra.Repository
             return this._context.SaveChangesAsync();
         }
 
-        public Task<int> UpdateEmployee(Employee employee)
+        public async Task<int> UpdateEmployee(Employee employee)
         {
-            var old = GetById(employee.Id);
+            var old = await GetById(employee.Id);
             this._context.Entry(old).CurrentValues.SetValues(employee);
-            return this._context.SaveChangesAsync();
+            return await this._context.SaveChangesAsync();
         }
     }
 }

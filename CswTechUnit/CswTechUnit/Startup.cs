@@ -22,7 +22,7 @@ namespace CswTechUnit
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=CswTechUnit;Trusted_Connection=True;ConnectRetryCount=0";
+            var connection = ConfigurationExtensions.GetConnectionString(this.Configuration, "DefaultConnection");
             services.AddDbContext<CswContext>(options => options.UseSqlServer(connection));
 
             services.AddSwaggerGen(c => {

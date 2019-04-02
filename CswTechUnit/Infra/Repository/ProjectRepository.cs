@@ -28,11 +28,11 @@ namespace Infra.Repository
                     .ToListAsync());
         }
 
-        public Task<int> Remove(int id)
+        public async Task<int> Remove(int id)
         {
-            var project = GetById(id);
+            var project = await GetById(id);
             this._context.Remove(project);
-            return this._context.SaveChangesAsync();
+            return await this._context.SaveChangesAsync();
         }
 
         public Task<Project> GetById(int id)

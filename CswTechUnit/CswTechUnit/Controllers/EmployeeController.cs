@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Domain;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 
 namespace CswTechUnit.Controllers
 {
@@ -23,9 +23,16 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<List<Employee>>>Get()
         {
-            return await this._employeeService.ListEmployees();
+            var response = await this._employeeService.ListEmployees();
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
 
         /// <summary>
@@ -34,9 +41,16 @@ namespace CswTechUnit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Employee), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Employee>> Get(int id)
         {
-            return await this._employeeService.GetById(id);
+            var response = await this._employeeService.GetById(id);
+            if (response!=null)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
 
         /// <summary>
@@ -45,9 +59,16 @@ namespace CswTechUnit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/projects")]
-        public async Task<List<Project>> Projects(int id)
+        [ProducesResponseType(typeof(List<Project>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Project>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<Project>>> Projects(int id)
         {
-            return await this._employeeService.ListProjectsByEmployeeId(id);
+            var response = await this._employeeService.ListProjectsByEmployeeId(id);
+            if (response.Count>0)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
 
         /// <summary>
@@ -55,7 +76,7 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="employee"></param>
         [HttpPost]
-        [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] Employee employee)
         {
@@ -73,7 +94,7 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="employee"></param>
         [HttpPut]
-        [ProducesResponseType(typeof(Employee), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put([FromBody] Employee employee)
         {
@@ -91,7 +112,7 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(Employee), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(int id)
         {
             await this._employeeService.RemoveEmployee(id);

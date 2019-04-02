@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Domain.DTO;
 using Domain.Interfaces.Services;
-using System.Threading.Tasks;
 using Domain;
-using Microsoft.AspNetCore.Http;
 
 namespace CswTechUnit.Controllers
 {
@@ -23,7 +23,7 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="dto"></param>
         [HttpPost]
-        [ProducesResponseType(typeof(ProjectAllocation), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] ProjectAllocationDTO dto)
         {
@@ -43,9 +43,16 @@ namespace CswTechUnit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ProjectAllocation), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProjectAllocation), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProjectAllocation>> Get(int id)
         {
-            return await this._projectAllocationService.GetById(id);
+            var response = await this._projectAllocationService.GetById(id);
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
 
         /// <summary>
@@ -53,9 +60,11 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(int id)
         {
-            this._projectAllocationService.Remove(id);
+            await this._projectAllocationService.Remove(id);
+            return NoContent();
         }
     }
 }

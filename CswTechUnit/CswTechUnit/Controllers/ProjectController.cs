@@ -23,7 +23,7 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="project"></param>
         [HttpPost]
-        [ProducesResponseType(typeof(Project), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] Project project)
         {
@@ -35,15 +35,23 @@ namespace CswTechUnit.Controllers
             }
             return BadRequest();
         }
+
         /// <summary>
         /// Get Project by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Project), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Project>> Get(int id)
         {
-            return await this._projectService.GetById(id);
+            var response = await this._projectService.GetById(id);
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
 
         /// <summary>
@@ -51,9 +59,11 @@ namespace CswTechUnit.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> Delete(int id)
         {
-            this._projectService.Remove(id);
+            await this._projectService.Remove(id);
+            return NoContent();
         }
 
         /// <summary>
@@ -62,9 +72,16 @@ namespace CswTechUnit.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}/Employees")]
-        public async Task<List<Employee>> Employees(int id)
+        [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Employee>), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<Employee>>> Employees(int id)
         {
-            return await this._projectService.ListEmployeesByProjectId(id);
+            var response = await this._projectService.ListEmployeesByProjectId(id);
+            if (response.Count > 0)
+            {
+                return Ok(response);
+            }
+            return NotFound();
         }
     }
 }
