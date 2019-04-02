@@ -9,11 +9,12 @@ using Domain.Interfaces.Services;
 
 namespace UnitTest
 {
-    public class TestProject
+    public class ProjectUnitTest
     {
         private readonly Mock<IProjectRepository> _mockProjectRepository;
         private readonly IProjectService projectService;
-        public TestProject()
+
+        public ProjectUnitTest()
         {
             _mockProjectRepository = new Mock<IProjectRepository>();
             projectService = new ProjectService(_mockProjectRepository.Object);
@@ -74,4 +75,3 @@ namespace UnitTest
         }
     }
 }
-

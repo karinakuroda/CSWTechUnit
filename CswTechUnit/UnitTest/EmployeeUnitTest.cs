@@ -9,11 +9,13 @@ using Xunit;
 
 namespace UnitTest
 {
-    public class TestEmployee
+    public class EmployeeUnitTest
     {
         private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
+
         private readonly IEmployeeService employeeService;
-        public TestEmployee()
+
+        public EmployeeUnitTest()
         {
             _mockEmployeeRepository = new Mock<IEmployeeRepository>();
             employeeService = new EmployeeService(_mockEmployeeRepository.Object);
@@ -104,5 +106,5 @@ namespace UnitTest
             return list;
         }
     }
-    
 }
+

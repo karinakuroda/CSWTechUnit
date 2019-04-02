@@ -20,7 +20,6 @@ namespace Domain
 
         public Employee()
         {
-
         }
 
         public Employee(int id, string name, DateTime startDate, RoleType role, PlatoonType platoonType) : this(name, startDate, role, platoonType)
@@ -38,7 +37,7 @@ namespace Domain
 
         public bool IsValid()
         {
-            if (!string.IsNullOrEmpty(this.Name) && Date.Date > DateTime.MinValue && this.Role > 0 && this.Platoon > 0)
+            if (!string.IsNullOrEmpty(this.Name) && this.Date.Date > DateTime.MinValue && this.Role > 0 && this.Platoon > 0)
                 return true;
 
             return false;
