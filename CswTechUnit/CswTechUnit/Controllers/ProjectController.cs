@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Domain;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using Domain.DTO;
 
 namespace CswTechUnit.Controllers
