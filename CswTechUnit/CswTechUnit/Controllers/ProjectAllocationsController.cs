@@ -9,11 +9,11 @@ namespace CswTechUnit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectAllocationController : ControllerBase
+    public class ProjectAllocationsController : ControllerBase
     {
         private readonly IProjectAllocationService _projectAllocationService;
 
-        public ProjectAllocationController(IProjectAllocationService projectAllocationService)
+        public ProjectAllocationsController(IProjectAllocationService projectAllocationService)
         {
             this._projectAllocationService = projectAllocationService;
         }

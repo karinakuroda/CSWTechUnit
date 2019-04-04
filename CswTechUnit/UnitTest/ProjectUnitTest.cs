@@ -19,7 +19,7 @@ namespace UnitTest
 
         private readonly Mock<IProjectService> _mockProjectService;
 
-        private readonly ProjectController _projectController;
+        private readonly ProjectsController _projectController;
 
         private readonly IProjectService _projectService;
 
@@ -28,7 +28,7 @@ namespace UnitTest
             _mockProjectRepository = new Mock<IProjectRepository>();
             _mockProjectService = new Mock<IProjectService>();
             _projectService = new ProjectService(_mockProjectRepository.Object);
-            _projectController = new ProjectController(_mockProjectService.Object);
+            _projectController = new ProjectsController(_mockProjectService.Object);
         }
 
         [Fact]
@@ -95,8 +95,8 @@ namespace UnitTest
 
         private static List<Employee> GetMockListEmployee()
         {
-            var joao = new Employee(1, "teste", new System.DateTime(2019, 03, 03), RoleType.JE, PlatoonType.Fusion);
-            var maria = new Employee(2, "teste 2", new System.DateTime(2019,03,03), RoleType.JE,PlatoonType.Fusion);
+            var joao = new Employee(1, "teste", new System.DateTime(2019, 03, 03), 1, 1);
+            var maria = new Employee(2, "teste 2", new System.DateTime(2019,03,03), 1,1);
             var list = new List<Employee>();
             list.Add(joao);
             list.Add(maria);

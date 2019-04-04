@@ -11,8 +11,8 @@ namespace Domain.DTO
 
         public DateTime StartDate { get; set; }
 
-        public RoleType Role { get; set; }
+        public int RoleId { get; set; }
 
-        public PlatoonType Platoon { get; set; }
+        public int PlatoonId { get; set; }
     }
 }

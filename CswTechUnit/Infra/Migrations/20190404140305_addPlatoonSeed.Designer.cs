@@ -4,14 +4,16 @@ using Infra;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infra.Migrations
 {
     [DbContext(typeof(CswContext))]
-    partial class CswContextModelSnapshot : ModelSnapshot
+    [Migration("20190404140305_addPlatoonSeed")]
+    partial class addPlatoonSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,13 +33,11 @@ namespace Infra.Migrations
 
                     b.Property<int>("PlatoonId");
 
-                    b.Property<int>("RoleId");
+                    b.Property<int>("Role");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PlatoonId");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Employees");
                 });
@@ -52,7 +52,7 @@ namespace Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platoon");
+                    b.ToTable("Platoons");
 
                     b.HasData(
                         new { Id = 1, Name = "Alchemists" },
@@ -70,25 +70,6 @@ namespace Infra.Migrations
                         new { Id = 13, Name = "Typhoon" },
                         new { Id = 14, Name = "Vision" },
                         new { Id = 15, Name = "Vulcan" }
-                    );
-                });
-
-            modelBuilder.Entity("Domain.Enum.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new { Id = 1, Name = "JE" },
-                        new { Id = 2, Name = "PE" },
-                        new { Id = 3, Name = "SE" }
                     );
                 });
 
@@ -131,11 +112,6 @@ namespace Infra.Migrations
                     b.HasOne("Domain.Enum.Platoon", "Platoon")
                         .WithMany()
                         .HasForeignKey("PlatoonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Domain.Enum.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

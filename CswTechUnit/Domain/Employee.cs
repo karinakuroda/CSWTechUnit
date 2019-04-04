@@ -12,9 +12,13 @@ namespace Domain
 
         public DateTime Date { get; set; }
 
-        public RoleType Role { get; set; }
+        public Role Role { get; set; }
 
-        public PlatoonType Platoon { get; set; }
+        public int RoleId { get; set; }
+
+        public int PlatoonId { get; set; }
+
+        public Platoon Platoon { get; set; }
 
         public List<ProjectAllocation> ProjectAllocations { get; set; }
 
@@ -22,22 +26,22 @@ namespace Domain
         {
         }
 
-        public Employee(int id, string name, DateTime startDate, RoleType role, PlatoonType platoonType) : this(name, startDate, role, platoonType)
+        public Employee(int id, string name, DateTime startDate, int roleId, int platoonId) : this(name, startDate, roleId, platoonId)
         {
             this.Id = id;
         }
 
-        public Employee(string name, DateTime startDate, RoleType role, PlatoonType platoonType)
+        public Employee(string name, DateTime startDate, int roleId, int platoonId)
         {
             this.Name = name;
             this.Date = startDate;
-            this.Role = role;
-            this.Platoon = platoonType;
+            this.RoleId = roleId;
+            this.PlatoonId = platoonId;
         }
 
         public bool IsValid()
         {
-            if (!string.IsNullOrEmpty(this.Name) && this.Date.Date > DateTime.MinValue && this.Role > 0 && this.Platoon > 0)
+            if (!string.IsNullOrEmpty(this.Name) && this.Date.Date > DateTime.MinValue && this.RoleId > 0 && this.PlatoonId > 0)
                 return true;
 
             return false;

@@ -10,11 +10,11 @@ namespace CswTechUnit.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService)
         {
             this._employeeService = employeeService;
         }
@@ -81,7 +81,7 @@ namespace CswTechUnit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] EmployeeDTO dto)
         {
-            var employee = new Employee(dto.Name, dto.StartDate,dto.Role, dto.Platoon);
+            var employee = new Employee(dto.Name, dto.StartDate, dto.RoleId, dto.PlatoonId);
             if (employee.IsValid())
             {
                 await this._employeeService.AddEmployee(employee);
@@ -99,7 +99,7 @@ namespace CswTechUnit.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put([FromBody] EmployeeDTO dto)
         {
-            var employee = new Employee(dto.Id, dto.Name, dto.StartDate, dto.Role, dto.Platoon);
+            var employee = new Employee(dto.Id, dto.Name, dto.StartDate, dto.RoleId, dto.PlatoonId);
             
             if (employee.IsValid())
             {

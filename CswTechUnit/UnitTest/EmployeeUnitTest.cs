@@ -18,7 +18,7 @@ namespace UnitTest
     {
         private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
         private readonly Mock<IEmployeeService> _mockEmployeeService;
-        private readonly EmployeeController _employeeController;
+        private readonly EmployeesController _employeeController;
 
         private readonly IEmployeeService employeeService;
 
@@ -26,7 +26,7 @@ namespace UnitTest
         {
             _mockEmployeeRepository = new Mock<IEmployeeRepository>();
             _mockEmployeeService= new Mock<IEmployeeService>();
-            _employeeController = new EmployeeController(_mockEmployeeService.Object);
+            _employeeController = new EmployeesController(_mockEmployeeService.Object);
             employeeService = new EmployeeService(_mockEmployeeRepository.Object);
         }
 
@@ -153,7 +153,7 @@ namespace UnitTest
 
         private static List<Employee> GetMockListEmployee()
         {
-            var emp = new Employee(1, "teste", new System.DateTime(2019, 03, 03), RoleType.JE, PlatoonType.Fusion);
+            var emp = new Employee(1, "teste", new System.DateTime(2019, 03, 03), 1, 1);
             var list = new List<Employee>();
             list.Add(emp);
             return list;
@@ -164,8 +164,8 @@ namespace UnitTest
             var dto = new EmployeeDTO();
             dto.Name = "Teste ABC";
             dto.StartDate = DateTime.Now;
-            dto.Role = RoleType.SE;
-            dto.Platoon = PlatoonType.Jedi;
+            dto.RoleId = 1;
+            dto.PlatoonId = 1;
             return dto;
         }
     }
