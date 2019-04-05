@@ -40,6 +40,7 @@ namespace Infra
             platoonsList.Add(new Platoon { Id= 13, Name= "Typhoon" });
             platoonsList.Add(new Platoon { Id= 14, Name= "Vision" });
             platoonsList.Add(new Platoon { Id = 15, Name = "Vulcan" });
+            platoonsList.Add(new Platoon { Id = 16, Name = "None" });
 
             modelBuilder.Entity<Platoon>().HasData(platoonsList.ToArray());
             modelBuilder.Entity<Role>().HasData(roleList.ToArray());

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Domain;
 using Domain.Interface.Repository;
-
+using Domain.Enum;
 
 namespace Infra.Repository
 {
@@ -26,7 +26,10 @@ namespace Infra.Repository
 
         public Task<Employee> GetById(int id)
         {
-            return this._context.Employees.SingleOrDefaultAsync(s=>s.Id==id);
+            return ( this._context.Set<Employee>()
+             .Include(i => i.Platoon)
+             .Include(i=>i.Role)
+             .SingleOrDefaultAsync(s => s.Id == id));
         }
 
         public Task<List<Employee>> ListEmployees()
