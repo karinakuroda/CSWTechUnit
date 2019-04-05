@@ -1,6 +1,4 @@
-﻿using Domain.DTO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Services
 {

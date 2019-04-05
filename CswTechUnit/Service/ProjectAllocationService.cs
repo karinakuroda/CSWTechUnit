@@ -1,8 +1,6 @@
 ﻿using Domain;
-using Domain.DTO;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Service

@@ -1,4 +1,4 @@
-﻿namespace Domain.DTO
+﻿namespace CswTechUnit.DTO
 {
     public class ProjectDTO
     {

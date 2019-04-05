@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Domain;
 using Domain.Interfaces.Services;
-using Domain.DTO;
+using CswTechUnit.DTO;
 
 namespace CswTechUnit.Controllers
 {
@@ -97,9 +97,9 @@ namespace CswTechUnit.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put([FromBody] EmployeeDTO dto)
+        public async Task<IActionResult> Put(int id, [FromBody] EmployeeDTO dto)
         {
-            var employee = new Employee(dto.Id, dto.Name, dto.StartDate, dto.RoleId, dto.PlatoonId);
+            var employee = new Employee(id, dto.Name, dto.StartDate, dto.RoleId, dto.PlatoonId);
             
             if (employee.IsValid())
             {

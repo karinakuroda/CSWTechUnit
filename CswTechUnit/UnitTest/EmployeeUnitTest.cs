@@ -1,7 +1,6 @@
 using CswTechUnit.Controllers;
+using CswTechUnit.DTO;
 using Domain;
-using Domain.DTO;
-using Domain.Enum;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -58,7 +57,7 @@ namespace UnitTest
             //Arrange
             _mockEmployeeService.Setup(s => s.UpdateEmployee(new Employee()));
             //Act
-            var resp = await _employeeController.Put(new EmployeeDTO());
+            var resp = await _employeeController.Put(1, new EmployeeDTO());
             //Assert
             var badRequestResult = Assert.IsType<BadRequestResult>(resp);
         }
@@ -69,7 +68,7 @@ namespace UnitTest
             //Arrange
             _mockEmployeeService.Setup(s => s.UpdateEmployee(new Employee()));
             //Act
-            var resp = await _employeeController.Put(GetValidEmployeeDTO());
+            var resp = await _employeeController.Put(1, GetValidEmployeeDTO());
             //Assert
             var badRequestResult = Assert.IsType<NoContentResult>(resp);
         }

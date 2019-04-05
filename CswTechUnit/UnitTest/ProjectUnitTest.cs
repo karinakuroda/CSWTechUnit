@@ -3,13 +3,12 @@ using Service;
 using System.Collections.Generic;
 using Xunit;
 using Domain;
-using Domain.Enum;
 using Domain.Interface.Repository;
 using Domain.Interfaces.Services;
 using CswTechUnit.Controllers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Domain.DTO;
+using CswTechUnit.DTO;
 
 namespace UnitTest
 {

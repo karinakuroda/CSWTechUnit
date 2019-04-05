@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Domain;
 using Domain.Interfaces.Services;
-using Domain.DTO;
+using CswTechUnit.DTO;
 
 namespace CswTechUnit.Controllers
 {

@@ -1,12 +1,9 @@
-﻿using Domain.Enum;
-using System;
+﻿using System;
 
-namespace Domain.DTO
+namespace CswTechUnit.DTO
 {
     public class EmployeeDTO
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }
